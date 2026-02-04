@@ -11,12 +11,12 @@ if (!defined('__TYPECHO_ROOT_DIR__')) {
 }
 
 /**
- * %description%
+ * 
  *
- * @package %name%
- * @author %author%
+ * @package TeXtend
+ * @author benzBrake
  * @version %version%
- * @link %link%
+ * @link https://github.com/benzBrake/TeXtend
  */
 class Plugin implements PluginInterface
 {
