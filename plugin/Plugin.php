@@ -381,6 +381,8 @@ class Plugin implements PluginInterface
         }
 
         $num = intval($self->$field);
-        echo sprintf($args[$num] ?? array_pop($args), $num);
+        // 优先使用索引对应的格式，如果不存在则使用最后一个，最后回退到默认格式
+        $format = $args[$num] ?? end($args) ?: '%d';
+        echo sprintf($format, $num);
     }
 }
