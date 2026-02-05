@@ -50,6 +50,23 @@ class Stat
         Plugin::removeColumn($db, $tableName, $adapter, 'likesNum');
     }
 
+    /**
+     * 过滤并补充文章统计字段
+     *
+     * 当数据中缺少浏览数字段时，从数据库查询并合并统计信息
+     *
+     * @param array $row 文章数据行
+     * @return array 包含完整统计信息的文章数据
+     */
+    public static function filter($row)
+    {
+        if (!array_key_exists('viewsNum', $row) && $row['cid']) {
+            $db = Db::get();
+            $result = $db->fetchRow($db->select('viewsNum, likesNum')->from('table.contents')->where('cid = ?', $row['cid'])->limit(1));
+            $row = array_merge($row, $result);
+        }
+        return $row;
+    }
 
 
     /**

@@ -37,6 +37,7 @@ class Plugin implements PluginInterface
         Plg::factory('\Widget\Archive')->select = [Plugin::class, 'select'];
         Plg::factory('\Widget\Archive')->callViewsNum = [Stat::class, 'callViewsNum'];
         Plg::factory('\Widget\Archive')->callLikesNum = [Stat::class, 'callLikesNum'];
+        Plg::factory('\Widget\Base\Contents')->filter = [Stat::class, 'filter'];
         Plg::factory('\Widget\Base\Contents')->markdown = [Plugin::class, 'markdown'];
         Plg::factory('\Widget\Base\Contents')->contentEx = [Content::class, 'parser'];
         Plg::factory('\Widget\Base\Contents')->excerptEx = [Content::class, 'parser'];
@@ -310,24 +311,23 @@ class Plugin implements PluginInterface
         $db->query(sprintf("ALTER TABLE %s RENAME TO %s", $tempTable, $tableName));
     }
 
-    public static function singleHandle($archive)
+    public static function singleHandle($archive, $select)
     {
-        if ($archive->is('single')) {
-            $cid = $archive->cid;
-            $views = Cookie::get('__post_views');
-            if (empty($views)) {
-                $views = [];
-            } else {
-                $views = explode(',', $views);
-            }
-            if (!in_array($cid, $views)) {
-                $db = Db::get();
-                $db->query($db->update('table.contents')->rows(array('viewsNum' => (int)$archive->viewsNum + 1))->where('cid = ?', $cid));
-                array_push($views, $cid);
-                $views = implode(',', $views);
-                Cookie::set('__post_views', $views);
-            }
+        $cid = $archive->cid;
+        $views = Cookie::get('__post_views');
+        if (empty($views)) {
+            $views = [];
+        } else {
+            $views = explode(',', $views);
         }
+        if (!in_array($cid, $views)) {
+            $db = Db::get();
+            $db->query($db->update('table.contents')->rows(array('viewsNum' => (int)$archive->viewsNum + 1))->where('cid = ?', $cid));
+            array_push($views, $cid);
+            $views = implode(',', $views);
+            Cookie::set('__post_views', $views);
+        }
+        return false;
     }
 
     public static function select($archive)
