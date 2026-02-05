@@ -192,9 +192,17 @@ TeXtend/
 
 ## 更新日志
 
+### v1.0.1
+- 新增 `tabs` 类型的 fence，支持多标签页切换
+- 新增 `details` 类型的 fence，支持折叠详情面板
+- 新增 fence 格式规范文档 [docs/FENCE_FORMAT.md](docs/FENCE_FORMAT.md)
+- 完善 README.md，添加详细的 fence 使用说明和开发指南
+- 修复 formatNum 函数报错问题
+- 修复正文页无法输出统计字段的问题
+
 ### v1.0.0
 - 初始版本发布
-- 支持 Fence Block 语法
+- 支持 Fence Block 语法（tip、warning、danger、info、success）
 - 集成 GitHub/Gitee 卡片
 - 支持多平台视频嵌入
 - 浏览数和点赞统计

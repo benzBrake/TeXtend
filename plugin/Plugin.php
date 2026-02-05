@@ -19,7 +19,7 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit;
  *
  * @package TeXtend
  * @author Ryan
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.2.0
  * @link https://doufu.ru
  *
