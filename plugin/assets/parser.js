@@ -18,6 +18,26 @@ window.TeXtend = {
             if (el.dataset.minWidth) el.style.setProperty('--min-width', el.dataset.minWidth);
         });
 
+        // Tabs 交互初始化
+        document.querySelectorAll('.fence-tabs').forEach(container => {
+            const buttons = container.querySelectorAll('.tab-button');
+            const panes = container.querySelectorAll('.tab-pane');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.dataset.tab;
+
+                    // 移除所有 active 类
+                    buttons.forEach(b => b.classList.remove('active'));
+                    panes.forEach(p => p.classList.remove('active'));
+
+                    // 添加 active 类到当前选中的 tab
+                    button.classList.add('active');
+                    container.querySelector(`[data-pane="${tabId}"]`).classList.add('active');
+                });
+            });
+        });
+
         // Masonry 初始化
         document.querySelectorAll('.fence-masonry .masonry-wrapper').forEach(el => {
             // 检查是否有 masonry-item 元素

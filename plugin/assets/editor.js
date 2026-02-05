@@ -68,6 +68,12 @@
             name: '瀑布流',
             template: '::: masonry {columns: 3, gap: 16px}\n- 内容项1\n- 内容项2\n- 内容项3\n:::',
             description: '瀑布流布局'
+        },
+        tabs: {
+            label: 'Tabs',
+            name: '多标签',
+            template: '::: tabs\n=== 标签1\n标签1内容\n\n===+ 标签2（默认显示）\n标签2内容\n\n=== 标签3\n标签3内容\n:::',
+            description: '多标签页'
         }
     };
 

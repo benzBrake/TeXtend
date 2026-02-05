@@ -703,4 +703,117 @@ kbd kbd {
         fill: #f87171;
         stroke: #f87171
     }
+
+    .fence-tabs {
+        border-color: #484f58;
+        background-color: #161b22
+    }
+
+    .fence-tabs .tabs-header {
+        background-color: #0d1117;
+        border-bottom-color: #484f58
+    }
+
+    .fence-tabs .tab-button {
+        color: #c9d1d9;
+        border-bottom-color: transparent
+    }
+
+    .fence-tabs .tab-button:hover {
+        color: #fff;
+        background-color: rgba(255, 255, 255, .05)
+    }
+
+    .fence-tabs .tab-button.active {
+        color: #58a6ff;
+        border-bottom-color: #58a6ff;
+        background-color: #161b22
+    }
+
+    .fence-tabs .tab-pane {
+        background-color: #161b22
+    }
+}
+
+/* ===== Tabs 样式 ===== */
+.fence-tabs {
+    border-color: #d0d7de;
+    background-color: #fff
+}
+
+.fence-tabs .tabs-header {
+    display: flex;
+    overflow-x: auto;
+    border-bottom: 1px solid #d0d7de;
+    background-color: #f6f8fa;
+    scrollbar-width: thin;
+    scrollbar-color: #d0d7de transparent
+}
+
+.fence-tabs .tabs-header::-webkit-scrollbar {
+    height: 4px
+}
+
+.fence-tabs .tabs-header::-webkit-scrollbar-track {
+    background: transparent
+}
+
+.fence-tabs .tabs-header::-webkit-scrollbar-thumb {
+    background-color: #d0d7de;
+    border-radius: 2px
+}
+
+.fence-tabs .tab-button {
+    flex-shrink: 0;
+    padding: 0.5em 1em;
+    border: none;
+    background: none;
+    color: #24292f;
+    font-size: 0.95em;
+    font-weight: 500;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+    white-space: nowrap
+}
+
+.fence-tabs .tab-button:hover {
+    color: #0969da;
+    background-color: rgba(9, 105, 218, .08)
+}
+
+.fence-tabs .tab-button.active {
+    color: #0969da;
+    border-bottom-color: #0969da;
+    background-color: #fff
+}
+
+.fence-tabs .tab-button:focus-visible {
+    outline: 2px solid #0969da;
+    outline-offset: -2px
+}
+
+.fence-tabs .tabs-content {
+    padding: 0
+}
+
+.fence-tabs .tab-pane {
+    display: none;
+    padding: 0.75em 1em;
+    animation: tabFadeIn 0.2s ease-in-out
+}
+
+.fence-tabs .tab-pane.active {
+    display: block
+}
+
+@keyframes tabFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(4px)
+        }
+    to {
+        opacity: 1;
+        transform: translateY(0)
+        }
 }

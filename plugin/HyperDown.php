@@ -994,6 +994,83 @@ class HyperDown
             return $html;
         }
         // --- END: RAW TYPE LOGIC ---
+        // --- START: TABS TYPE LOGIC ---
+        if ($type === 'tabs') {
+            $classes = "fence fence-tabs";
+            if ($variant) {
+                $classes .= " variant-{$variant}";
+            }
+            $html = "<div class=\"{$classes}\"{$html_attrs}>";
+
+            // 按行解析 tabs 内容
+            $lines = explode("\n", $content);
+            $buttons = [];
+            $tabPanes = [];
+            $currentTabContent = [];
+            $currentTabName = '';
+            $tabs = [];
+
+            $defaultIndex = 0;  // 默认选中第一个
+            $foundDefault = false;
+            $tabIndex = 0;
+
+            foreach ($lines as $line) {
+                // 匹配 === 或 ===+ 开头的标题行
+                if (preg_match('/^={3,}\s*(\+)?\s*(.+)$/', $line, $matches)) {
+                    // 保存上一个 tab
+                    if ($currentTabName !== '') {
+                        $tabs[] = [
+                            'name' => $currentTabName,
+                            'content' => trim(implode("\n", $currentTabContent))
+                        ];
+                        $tabIndex++;
+                    }
+
+                    $currentTabName = trim($matches[2]);
+                    $currentTabContent = [];
+
+                    // 检查当前 tab 是否有 + 标记
+                    $isDefault = ($matches[1] === '+');
+                    if ($isDefault && !$foundDefault) {
+                        $defaultIndex = $tabIndex;
+                        $foundDefault = true;
+                    }
+                } else {
+                    $currentTabContent[] = $line;
+                }
+            }
+
+            // 保存最后一个 tab
+            if ($currentTabName !== '') {
+                $tabs[] = [
+                    'name' => $currentTabName,
+                    'content' => trim(implode("\n", $currentTabContent))
+                ];
+            }
+
+            // 构建 HTML
+            foreach ($tabs as $index => $tab) {
+                $tabId = 'tab-' . $this->_uniqid . '-' . $index;
+                $activeClass = ($index === $defaultIndex) ? ' active' : '';
+
+                // 构建 tab 按钮
+                $buttons[] = '<button class="tab-button' . $activeClass . '" data-tab="' . $tabId . '">'
+                    . $this->parseInline($tab['name'])
+                    . '</button>';
+
+                // 构建 tab 内容面板
+                $parsedContent = $this->parse($tab['content'], false, $start + 1);
+                $tabPanes[] = '<div class="tab-pane' . $activeClass . '" data-pane="' . $tabId . '">'
+                    . $parsedContent
+                    . '</div>';
+            }
+
+            $html .= '<div class="tabs-header">' . implode("\n", $buttons) . '</div>';
+            $html .= '<div class="tabs-content">' . implode("\n", $tabPanes) . '</div>';
+            $html .= '</div>';
+            return $html;
+        }
+        // --- END: TABS TYPE LOGIC ---
         // --- START: DEFAULT TITLE LOGIC ---
         $final_title = trim($title);
         if (!$final_title) { // If no title is provided
