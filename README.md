@@ -18,9 +18,11 @@ TeXtend 是一款功能强大的 Typecho 博客插件，提供 Markdown 语法�
   - `:::danger` - 危险块
   - `:::info` - 信息块
   - `:::success` - 成功块
+  - `:::tabs` - 标签页
+  - `:::details` - 折叠详情
+  - `:::raw` - 原始输出
   - `:::grid` - 网格布局
   - `:::masonry` - 瀑布流布局
-  - `:::collapse` - 折叠面板
 
 ### 内容增强
 
@@ -77,6 +79,12 @@ git clone https://github.com/benzBrake/TeXtend.git
 
 ### Fence Block 语法
 
+Fence Block 是 TeXtend 的核心功能之一，提供丰富的内容块和交互组件。
+
+**完整文档**：详见 [docs/FENCE_FORMAT.md](docs/FENCE_FORMAT.md) 获取完整的 fence 类型说明、语法规范及扩展开发指南。
+
+**快速示例**：
+
 ```markdown
 :::tip 标题（可选）
 这是一条提示信息
@@ -86,15 +94,16 @@ git clone https://github.com/benzBrake/TeXtend.git
 这是一条警告信息
 :::
 
-:::grid
-[图片1](url)
-[图片2](url)
+:::tabs
+===+ 默认标签
+标签内容1
+
+=== 其他标签
+标签内容2
 :::
 
-:::masonry
-![img1](url)
-
-![img2](url)
+:::details:open 默认展开
+详情内容
 :::
 ```
 
@@ -141,6 +150,8 @@ TeXtend/
 │   ├── masonry.pkgd.min.js  # Masonry 布局库
 │   ├── plyr.css      # 视频播放器样式
 │   └── plyr.js       # 视频播放器脚本
+├── docs/
+│   └── FENCE_FORMAT.md  # Fence 格式规范文档
 ├── HyperDown.php     # Markdown 语法解析器
 ├── Content.php       # HTML 内容解析器
 ├── Stat.php          # 统计功能
@@ -153,11 +164,16 @@ TeXtend/
 
 ### 新增 Fence Block 类型
 
-1. 在 `HyperDown.php` 中注册解析器
-2. 在 `assets/app.css` 中添加样式
-3. 在 `assets/parser.js` 中添加前端处理（如需要）
+添加新的 fence 类型时，请遵循以下步骤：
 
-详见 [CLAUDE.md](CLAUDE.md) 开发规范。
+1. 在 `HyperDown.php` 的 `parseFence()` 方法中添加类型处理逻辑
+2. 在 `assets/app.css` 中添加对应样式
+3. 在 `assets/parser.js` 中添加前端交互（如需要）
+4. 更新 [docs/FENCE_FORMAT.md](docs/FENCE_FORMAT.md) 文档
+
+**Fence 格式规范**：详见 [docs/FENCE_FORMAT.md](docs/FENCE_FORMAT.md)，该文档定义了所有支持的 fence 类型语法及扩展开发指南。
+
+开发规范详见 [CLAUDE.md](CLAUDE.md)。
 
 ## 常见问题
 
